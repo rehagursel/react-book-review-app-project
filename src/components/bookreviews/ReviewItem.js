@@ -13,7 +13,7 @@ const ReviewItem = (props) => {
             <p className={classes.review}>{props.reviewText}</p>
             <p className={classes.author}>{props.author}</p>
           </div>
-          <Link to="/reviewList/:reviewId" className="btn">
+          <Link to={`/reviewList/${props.id}`} className="btn">
             View Detail
           </Link>
         </div>

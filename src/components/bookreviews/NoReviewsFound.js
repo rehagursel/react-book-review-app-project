@@ -1,12 +1,14 @@
-import classes from './NoReviewsFound.module.css';
+import { Link } from "react-router-dom";
+
+import classes from "./NoReviewsFound.module.css";
 
 const NoReviewsFound = () => {
   return (
     <div className={classes.noreviews}>
       <p>No reviews found!</p>
-      <a className='btn'>
-        Add a Book
-      </a>
+      <Link to="/new-review" className="btn">
+        Add New Book Review
+      </Link>
     </div>
   );
 };

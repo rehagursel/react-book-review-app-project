@@ -2,9 +2,13 @@ import { useState } from "react";
 
 import classes from "./UploadAndDisplayImage.module.css";
 
-const UploadAndDisplayImage = () => {
+const UploadAndDisplayImage = (props) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
+  props.onAddImage({
+    img: selectedImage,
+  });
+  
   return (
     <div >
       {selectedImage && (

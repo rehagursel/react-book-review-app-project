@@ -9,6 +9,11 @@ const NewBookForm = (props) => {
   const nameInputRef = useRef();
   const authorInputRef = useRef();
   const textInputRef = useRef();
+  let imgInput;
+
+  function imgInputHandler(img) {
+    imgInput = img;
+  }
 
   function submitFormHandler(event) {
     event.preventDefault();
@@ -16,13 +21,14 @@ const NewBookForm = (props) => {
     const enteredName = nameInputRef.current.value;
     const enteredAuthor = authorInputRef.current.value;
     const enteredText = textInputRef.current.value;
+    
+    //  validation will be here
 
-    // optional: Could validate here
-
-    props.onAddQuote({
+    props.onAddReview({
       name: enteredName,
       author: enteredAuthor,
       text: enteredText,
+      image: imgInput,
     });
   }
 
@@ -34,7 +40,7 @@ const NewBookForm = (props) => {
             <LoadingSpinner />
           </div>
         )}
-        <UploadAndDisplayImage/>
+        <UploadAndDisplayImage onAddImage={imgInputHandler} />
         <div className={classes.control}>
           <label htmlFor="name">Book Name</label>
           <input type="text" id="name" ref={nameInputRef} />
@@ -44,8 +50,8 @@ const NewBookForm = (props) => {
           <input type="text" id="author" ref={authorInputRef} />
         </div>
         <div className={classes.control}>
-          <label htmlFor="summary">Review</label>
-          <textarea id="summary" rows="5" ref={textInputRef}></textarea>
+          <label htmlFor="reviewText">Review</label>
+          <textarea id="reviewText" rows="15" ref={textInputRef}></textarea>
         </div>
         <div className={classes.actions}>
           <button className="btn">Add New Book Review</button>
