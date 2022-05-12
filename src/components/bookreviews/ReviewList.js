@@ -24,7 +24,11 @@ const ReviewList = (props) => {
   const sortedReviews = sortReviews(props.books, isSortingAscending)
 
   function changeSortHandler() {
-    history.push("/reviewList?sort=" + (isSortingAscending ? "desc" : "asc"));
+    /* history.push(`${location.pathname}?sort=${(isSortingAscending ? "desc" : "asc")}`); */
+    history.push({
+      pathname: location.pathname,
+      search: `?sort=${(isSortingAscending ? "desc" : "asc")}`
+    })
   }
 
   return (

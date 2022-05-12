@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, Route } from "react-router-dom";
+import { useParams, Route, Link, useRouteMatch } from "react-router-dom";
 import { LoremIpsum } from "lorem-ipsum";
 
 import BookReviewDetail from "../components/bookreviews/BookReviewDetail";
@@ -64,25 +64,28 @@ const booksList = [
 
 const ReviewDetail = () => {
   const params = useParams();
+  const match = useRouteMatch();
 
   const reviewDetail = booksList.find((book) => book.id === params.reviewId);
 
   if (!reviewDetail) {
-    return (
-    <div>
-    <br/>
-    <br/>
-    <br/>
-    <p>No Review Found!</p>
-    </div>);
-     }
+    return <p>No Review Found!</p>;
+  }
 
   return (
     <React.Fragment>
-      <br />
-      <br />
       <BookReviewDetail reviewDetail={reviewDetail} />
-      <Route path={`/reviewList/${params.reviewId}/comments`}>
+      <Route path={/* `/reviewList/${params.reviewId}` */ match.path} exact>
+        <div className="centered">
+          <Link
+            to={`${match.url}/comments`}
+            className="btn--flat"
+          >
+            Show Comments
+          </Link>
+        </div>
+      </Route>
+      <Route path={`${match.path}/comments`}>
         <Comments />
       </Route>
     </React.Fragment>

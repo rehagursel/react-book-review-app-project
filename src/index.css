@@ -9,7 +9,7 @@ body {
 }
 
 .centered {
-  margin: 3rem auto;
+  margin: 1rem auto;
   text-align: center;
   display: flex;
   justify-content: center;

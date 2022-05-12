@@ -1,13 +1,12 @@
 .list {
   list-style: none;
-  
   padding: 0;
 }
 
 .sorting {
   padding-bottom: 1rem;
   border-bottom: 3px solid #b2d4d4;
-  margin: 7rem 0 2rem 0;
+  margin-bottom: 2rem;
 }
 
 .sorting button {
