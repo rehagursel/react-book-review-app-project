@@ -4,18 +4,14 @@ import { Prompt } from "react-router-dom";
 import Card from "../UI/Card";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import classes from "./NewBookForm.module.css";
-import UploadAndDisplayImage from "./UploadAndDisplayImage";
 
 const NewBookForm = (props) => {
   const [isEntered, setIsEntered] = useState(false);
   const nameInputRef = useRef();
   const authorInputRef = useRef();
   const textInputRef = useRef();
-  let imgInput;
+  const imgInputRef = useRef();
 
-  function imgInputHandler(img) {
-    imgInput = img;
-  }
 
   function submitFormHandler(event) {
     event.preventDefault();
@@ -23,14 +19,15 @@ const NewBookForm = (props) => {
     const enteredName = nameInputRef.current.value;
     const enteredAuthor = authorInputRef.current.value;
     const enteredText = textInputRef.current.value;
+    const enteredImg = URL.createObjectURL(imgInputRef.current.files[0]);
 
     //  validation will be here
 
     props.onAddReview({
       name: enteredName,
       author: enteredAuthor,
-      text: enteredText,
-      image: imgInput,
+      reviewText: enteredText,
+      src: enteredImg,
     });
   }
 
@@ -61,7 +58,10 @@ const NewBookForm = (props) => {
               <LoadingSpinner />
             </div>
           )}
-          <UploadAndDisplayImage onAddImage={imgInputHandler} />
+          <div className={classes.control}>
+            <label htmlFor="myImage">Upload Book Cover</label>
+            <input type="file" name="myImage" ref={imgInputRef} />
+          </div>
           <div className={classes.control}>
             <label htmlFor="name">Book Name</label>
             <input type="text" id="name" ref={nameInputRef} />

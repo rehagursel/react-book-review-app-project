@@ -1,47 +1,47 @@
-const FIREBASE_DOMAIN = 'https://react-prep-default-rtdb.firebaseio.com';
+const FIREBASE_DOMAIN = 'https://book-review-app-9d2da-default-rtdb.firebaseio.com';
 
-export async function getAllQuotes() {
-  const response = await fetch(`${FIREBASE_DOMAIN}/quotes.json`);
+export async function getAllReviews() {
+  const response = await fetch(`${FIREBASE_DOMAIN}/reviews.json`);
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || 'Could not fetch quotes.');
+    throw new Error(data.message || 'Could not fetch reviews.');
   }
 
-  const transformedQuotes = [];
+  const loadedReviews = [];
 
   for (const key in data) {
-    const quoteObj = {
+    const reviewObj = {
       id: key,
       ...data[key],
     };
 
-    transformedQuotes.push(quoteObj);
+    loadedReviews.push(reviewObj);
   }
 
-  return transformedQuotes;
+  return loadedReviews;
 }
 
-export async function getSingleQuote(quoteId) {
-  const response = await fetch(`${FIREBASE_DOMAIN}/quotes/${quoteId}.json`);
+export async function getSingleReview(reviewId) {
+  const response = await fetch(`${FIREBASE_DOMAIN}/reviews/${reviewId}.json`);
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || 'Could not fetch quote.');
+    throw new Error(data.message || 'Could not fetch review.');
   }
 
-  const loadedQuote = {
-    id: quoteId,
+  const loadedReview = {
+    id: reviewId,
     ...data,
   };
 
-  return loadedQuote;
+  return loadedReview;
 }
 
-export async function addQuote(quoteData) {
-  const response = await fetch(`${FIREBASE_DOMAIN}/quotes.json`, {
+export default async function addReview(reviewData) {
+  const response = await fetch(`${FIREBASE_DOMAIN}/reviews.json`, {
     method: 'POST',
-    body: JSON.stringify(quoteData),
+    body: JSON.stringify(reviewData),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -49,7 +49,7 @@ export async function addQuote(quoteData) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || 'Could not create quote.');
+    throw new Error(data.message || 'Could not create review.');
   }
 
   return null;
@@ -72,8 +72,8 @@ export async function addComment(requestData) {
   return { commentId: data.name };
 }
 
-export async function getAllComments(quoteId) {
-  const response = await fetch(`${FIREBASE_DOMAIN}/comments/${quoteId}.json`);
+export async function getAllComments(reviewId) {
+  const response = await fetch(`${FIREBASE_DOMAIN}/comments/${reviewId}.json`);
 
   const data = await response.json();
 

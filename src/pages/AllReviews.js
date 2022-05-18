@@ -1,22 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
+
 import { LoremIpsum } from "lorem-ipsum";
+
 import ReviewList from "../components/bookreviews/ReviewList";
+
 import NoReviewsFound from "../components/bookreviews/NoReviewsFound";
+import useHttp from "../hooks/use-http";
+import { getAllReviews } from "../lib/api";
+import LoadingSpinner from "../components/UI/LoadingSpinner";
 
 const lorem = new LoremIpsum({
-    sentencesPerParagraph: {
-      max: 8,
-      min: 4
-    },
-    wordsPerSentence: {
-      max: 16,
-      min: 4
-    }
-  });
+  sentencesPerParagraph: {
+    max: 8,
+    min: 4,
+  },
+  wordsPerSentence: {
+    max: 16,
+    min: 4,
+  },
+});
 
-  const demoP =lorem.generateParagraphs(3);
+const demoP = lorem.generateParagraphs(3);
 
-const booksList = [
+const dummyBooksList = [
   {
     id: "alh",
     author: "Ethan Tulpy",
@@ -24,7 +30,8 @@ const booksList = [
     publishDate: "2022",
     name: "A Little Hope",
     reviewText:
-      "Freddie and Greg Tyler seem to have it all: a comfortable home at the edge of the woods, a beautiful young daughter, a bond that feels unbreakable. But when Greg is diagnosed with a rare and aggressive form of cancer, the sense of certainty they once knew evaporates overnight. Meanwhile, Darcy Crowley is still coming to terms with the loss of her husband as she worries over her struggling adult son, Luke. Elsewhere, Ginger Lord returns home longing for a lost relationship; Ahmed Ghannam wonders if he’ll ever find true love; and Greg’s boss, Alex Lionel, grapples with a secret of his own.\nFreddie and Greg Tyler seem to have it all: a comfortable home at the edge of the woods, a beautiful young daughter, a bond that feels unbreakable. But when Greg is diagnosed with a rare and aggressive form of cancer, the sense of certainty they once knew evaporates overnight. Meanwhile, Darcy Crowley is still coming to terms with the loss of her husband as she worries over her struggling adult son, Luke. Elsewhere, Ginger Lord returns home longing for a lost relationship; Ahmed Ghannam wonders if he’ll ever find true love; and Greg’s boss, Alex Lionel, grapples with a secret of his own." + demoP,
+      "Freddie and Greg Tyler seem to have it all: a comfortable home at the edge of the woods, a beautiful young daughter, a bond that feels unbreakable. But when Greg is diagnosed with a rare and aggressive form of cancer, the sense of certainty they once knew evaporates overnight. Meanwhile, Darcy Crowley is still coming to terms with the loss of her husband as she worries over her struggling adult son, Luke. Elsewhere, Ginger Lord returns home longing for a lost relationship; Ahmed Ghannam wonders if he’ll ever find true love; and Greg’s boss, Alex Lionel, grapples with a secret of his own.\nFreddie and Greg Tyler seem to have it all: a comfortable home at the edge of the woods, a beautiful young daughter, a bond that feels unbreakable. But when Greg is diagnosed with a rare and aggressive form of cancer, the sense of certainty they once knew evaporates overnight. Meanwhile, Darcy Crowley is still coming to terms with the loss of her husband as she worries over her struggling adult son, Luke. Elsewhere, Ginger Lord returns home longing for a lost relationship; Ahmed Ghannam wonders if he’ll ever find true love; and Greg’s boss, Alex Lionel, grapples with a secret of his own." +
+      demoP,
     src: "https://fromfirstpagetolast.files.wordpress.com/2022/04/9781739966003-1.jpg",
   },
   {
@@ -60,9 +67,41 @@ const booksList = [
 ];
 
 const AllReviews = () => {
+  const {
+    sendRequest,
+    status,
+    data: loadedReviews,
+    error,
+  } = useHttp(getAllReviews, true);
+
+  useEffect(() => {
+    sendRequest();
+  }, [sendRequest]);
+
+  if (status === "pending") {
+    return (
+      <div className="centered">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <p className="centered focused">{error}</p>;
+  }
+
+  if (
+    status === "completed" &&
+    ((!loadedReviews || loadedReviews.length === 0) && dummyBooksList.length === 0)
+  ) {
+    return <NoReviewsFound />;
+  }
+
+  const booksList = [...dummyBooksList, ...loadedReviews];
+
   return (
     <React.Fragment>
-      {booksList.length !== 0 ? <ReviewList books={booksList} /> : <NoReviewsFound/>}
+      <ReviewList books={booksList} />
     </React.Fragment>
   );
 };
