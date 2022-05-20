@@ -56,3 +56,13 @@ body {
   background-color: teal;
   color: white;
 }
+
+@media screen and (max-width: 760px)  {
+  .btn{
+      padding: 0.5rem 0.5rem;
+      border: 1px solid teal;
+      height:fit-content;
+      cursor: pointer;
+      font-size: 8px;
+  }
+}

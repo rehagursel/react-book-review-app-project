@@ -1,10 +1,6 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
-/* import ReviewList from "./components/bookreviews/ReviewList";
-import BookReviewDetail from "./components/bookreviews/BookReviewDetail.js";
-import NewBookForm from "./components/bookreviews/NewBookForm"; */
-
 import AllReviews from "./pages/AllReviews";
 import ReviewDetail from "./pages/ReviewDetail";
 import NewReview from "./pages/NewReview";

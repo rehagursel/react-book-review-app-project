@@ -38,3 +38,15 @@
 .nav a.active {
   color: #e6fcfc;
 }
+
+@media screen and (max-width: 760px)  {
+  .logo {
+    font-size: 1rem;
+    color: white;
+  }
+
+  .nav li {
+    margin-left: 1rem;
+    font-size: .5rem;
+  }
+}

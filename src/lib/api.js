@@ -31,7 +31,7 @@ export async function getSingleReview(reviewId) {
   }
 
   const loadedReview = {
-    id: reviewId,
+   
     ...data,
   };
 
@@ -85,7 +85,7 @@ export async function getAllComments(reviewId) {
 
   for (const key in data) {
     const commentObj = {
-      id: key,
+     id: key,
       ...data[key],
     };
 

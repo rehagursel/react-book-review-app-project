@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
+
 import { useParams, Route, Link, useRouteMatch } from "react-router-dom";
 import { LoremIpsum } from "lorem-ipsum";
 
 import BookReviewDetail from "../components/bookreviews/BookReviewDetail";
 import Comments from "../components/comments/Comments";
+import useHttp from "../hooks/use-http";
+import { getSingleReview } from "../lib/api";
+import LoadingSpinner from "../components/UI/LoadingSpinner";
 
 const lorem = new LoremIpsum({
   sentencesPerParagraph: {
@@ -65,22 +69,58 @@ const booksList = [
 const ReviewDetail = () => {
   const params = useParams();
   const match = useRouteMatch();
+  
+  const dummyReviewDetail = booksList.find(
+    (book) => book.id === params.reviewId
+  );
 
-  const reviewDetail = booksList.find((book) => book.id === params.reviewId);
+  const {
+    sendRequest,
+    status,
+    data: loadedReview,
+    error,
+  } = useHttp(getSingleReview, true);
 
-  if (!reviewDetail) {
+  useEffect(() => {
+    sendRequest(params.reviewId);
+  }, [sendRequest,params.reviewId]);
+
+  if (status === "pending") {
+    return (
+      <div className="centered">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (error && !dummyReviewDetail) {
+    return <p className="centered focused">{error}</p>;
+  }
+
+  if (
+    status === "completed" &&
+    (loadedReview.name === undefined) && !dummyReviewDetail
+  ) {
     return <p>No Review Found!</p>;
   }
+
+  let reviewDetail;
+
+  if (loadedReview.name === undefined) {
+    reviewDetail = dummyReviewDetail;
+  } else {
+    reviewDetail = loadedReview;
+  }
+
+
+  console.log(loadedReview);
 
   return (
     <React.Fragment>
       <BookReviewDetail reviewDetail={reviewDetail} />
       <Route path={/* `/reviewList/${params.reviewId}` */ match.path} exact>
         <div className="centered">
-          <Link
-            to={`${match.url}/comments`}
-            className="btn--flat"
-          >
+          <Link to={`${match.url}/comments`} className="btn--flat">
             Show Comments
           </Link>
         </div>

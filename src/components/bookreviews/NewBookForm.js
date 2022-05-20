@@ -9,6 +9,8 @@ const NewBookForm = (props) => {
   const [isEntered, setIsEntered] = useState(false);
   const nameInputRef = useRef();
   const authorInputRef = useRef();
+  const reviewAuthorInputRef = useRef();
+  const publishInputRef = useRef();
   const textInputRef = useRef();
   const imgInputRef = useRef();
 
@@ -18,14 +20,19 @@ const NewBookForm = (props) => {
 
     const enteredName = nameInputRef.current.value;
     const enteredAuthor = authorInputRef.current.value;
+    const enteredReviewAuthor = reviewAuthorInputRef.current.value;
+    const enteredDate = publishInputRef.current.value;
     const enteredText = textInputRef.current.value;
     const enteredImg = URL.createObjectURL(imgInputRef.current.files[0]);
 
     //  validation will be here
 
     props.onAddReview({
+     /*  id: enteredName, */
       name: enteredName,
-      author: enteredAuthor,
+      bookAuthor: enteredAuthor,
+      author: enteredReviewAuthor,
+      publishDate: enteredDate,
       reviewText: enteredText,
       src: enteredImg,
     });
@@ -60,19 +67,27 @@ const NewBookForm = (props) => {
           )}
           <div className={classes.control}>
             <label htmlFor="myImage">Upload Book Cover</label>
-            <input type="file" name="myImage" ref={imgInputRef} />
+            <input required type="file" name="myImage" ref={imgInputRef} />
           </div>
           <div className={classes.control}>
             <label htmlFor="name">Book Name</label>
-            <input type="text" id="name" ref={nameInputRef} />
+            <input required type="text" id="name" ref={nameInputRef} />
           </div>
           <div className={classes.control}>
-            <label htmlFor="author">Author</label>
-            <input type="text" id="author" ref={authorInputRef} />
+            <label htmlFor="author">Book Author</label>
+            <input required type="text" id="author" ref={authorInputRef} />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="publish">Publish Date</label>
+            <input required type="date" id="publish" ref={publishInputRef} />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="rauthor">Name and Surname</label>
+            <input required type="text" id="rauthor" ref={reviewAuthorInputRef} />
           </div>
           <div className={classes.control}>
             <label htmlFor="reviewText">Review</label>
-            <textarea id="reviewText" rows="15" ref={textInputRef}></textarea>
+            <textarea required  id="reviewText" rows="15" ref={textInputRef}></textarea>
           </div>
           <div className={classes.actions}>
             <button className="btn" onClick={finishFocusedHandler}>
