@@ -56,7 +56,7 @@ export default async function addReview(reviewData) {
 }
 
 export async function addComment(requestData) {
-  const response = await fetch(`${FIREBASE_DOMAIN}/comments/${requestData.quoteId}.json`, {
+  const response = await fetch(`${FIREBASE_DOMAIN}/comments.json`, {
     method: 'POST',
     body: JSON.stringify(requestData.commentData),
     headers: {

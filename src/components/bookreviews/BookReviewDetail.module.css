@@ -22,7 +22,7 @@
 }
 
 .reviewBox {
-  width: 65%;
+  width: 70%;
   margin:0 1rem;
   box-sizing: border-box;
 }
@@ -42,7 +42,7 @@
 
 .cover img {
   width: 100%;
-  height: 25rem;
+  height: 18rem;
   min-width: 8rem;
 }
 
@@ -75,10 +75,9 @@
   }
 
   .cover img {
-    width: 70%;
-    height: 20rem;
-    min-width: 8rem;
-  }
+    width: 12rem;
+    height: 16rem;
+   }
 
   h1{
     text-align:center;
