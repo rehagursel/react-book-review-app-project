@@ -1,10 +1,14 @@
+import React from 'react';
+
 import CommentItem from './CommentItem';
 import classes from './CommentsList.module.css';
 
-const CommentsList = (props) => {
+const CommentsList = ({commentList}) => {
+
+
   return (
     <ul className={classes.comments}>
-      {props.comments.map((comment) => (
+      {commentList.map((comment) => (
         <CommentItem key={comment.id} text={comment.text} />
       ))}
     </ul>

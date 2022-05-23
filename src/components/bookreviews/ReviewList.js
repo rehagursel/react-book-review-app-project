@@ -7,9 +7,9 @@ import classes from "./ReviewList.module.css";
 const sortReviews = (reviews, ascending) => {
   return reviews.sort((reviewA, reviewB) => {
     if (ascending) {
-      return reviewA.publishDate> reviewB.publishDate ? 1 : -1;
+      return reviewA.name> reviewB.name ? 1 : -1;
     } else {
-      return reviewA.publishDate < reviewB.publishDate ? 1 : -1;
+      return reviewA.name < reviewB.name ? 1 : -1;
     }
   });
 };

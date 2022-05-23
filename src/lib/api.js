@@ -56,7 +56,7 @@ export default async function addReview(reviewData) {
 }
 
 export async function addComment(requestData) {
-  const response = await fetch(`${FIREBASE_DOMAIN}/comments.json`, {
+  const response = await fetch(`${FIREBASE_DOMAIN}/comments/${requestData.reviewId}.json`, {
     method: 'POST',
     body: JSON.stringify(requestData.commentData),
     headers: {
@@ -81,7 +81,7 @@ export async function getAllComments(reviewId) {
     throw new Error(data.message || 'Could not get comments.');
   }
 
-  const transformedComments = [];
+  const loadedComments = [];
 
   for (const key in data) {
     const commentObj = {
@@ -89,8 +89,8 @@ export async function getAllComments(reviewId) {
       ...data[key],
     };
 
-    transformedComments.push(commentObj);
+    loadedComments.push(commentObj);
   }
 
-  return transformedComments;
+  return loadedComments;
 }

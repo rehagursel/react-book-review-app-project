@@ -28,7 +28,6 @@ const NewBookForm = (props) => {
     //  validation will be here
 
     props.onAddReview({
-     /*  id: enteredName, */
       name: enteredName,
       bookAuthor: enteredAuthor,
       author: enteredReviewAuthor,

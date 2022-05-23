@@ -70,9 +70,12 @@ const ReviewDetail = () => {
   const params = useParams();
   const match = useRouteMatch();
   
+  const { reviewId } = params;
+
   const dummyReviewDetail = booksList.find(
-    (book) => book.id === params.reviewId
+    (book) => book.id === reviewId
   );
+
 
   const {
     sendRequest,
@@ -82,8 +85,8 @@ const ReviewDetail = () => {
   } = useHttp(getSingleReview, true);
 
   useEffect(() => {
-    sendRequest(params.reviewId);
-  }, [sendRequest,params.reviewId]);
+    sendRequest(reviewId);
+  }, [sendRequest,reviewId]);
 
   if (status === "pending") {
     return (
@@ -99,21 +102,18 @@ const ReviewDetail = () => {
 
   if (
     status === "completed" &&
-    (loadedReview.name === undefined) && !dummyReviewDetail
+    (!loadedReview.name) && !dummyReviewDetail
   ) {
     return <p>No Review Found!</p>;
   }
 
   let reviewDetail;
 
-  if (loadedReview.name === undefined) {
+  if (!loadedReview.name) {
     reviewDetail = dummyReviewDetail;
   } else {
     reviewDetail = loadedReview;
   }
-
-
-  console.log(loadedReview);
 
   return (
     <React.Fragment>
