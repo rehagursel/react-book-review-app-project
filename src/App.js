@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Switch, Redirect, useHistory } from "react-router-dom";
 
 import AllReviews from "./pages/AllReviews";
 import ReviewDetail from "./pages/ReviewDetail";
@@ -7,6 +7,11 @@ import NewReview from "./pages/NewReview";
 import Layout from "./components/layout/Layout";
 
 function App() {
+  let history = useHistory();
+  useEffect(() => {
+    history.push("/reviewList");
+  }, [history]);
+
   return (
     <Layout>
       <Switch>

@@ -2,7 +2,7 @@
   "name": "react-book-review-app-project",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://rehagursel.github.io/react-book-review-app-project",
+  "homepage": "https://rehagursel.github.io/react-book-review-app-project/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
